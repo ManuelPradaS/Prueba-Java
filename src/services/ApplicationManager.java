@@ -1,5 +1,8 @@
 package services;
 
+import services.api.*;
+import services.impl.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,34 +15,34 @@ public class ApplicationManager {
     private static final String selectionOrderingMessage = "Si desea ordenamiento ascendente introduzca: A, para ordenamiento descendente introduzca: D";
 
     private BufferedReader bufferReader;
-    private ConsoleReader consoleReader;
-    private ResponseMaker responseMaker;
-    private WordsInspector wordsInspector;
-    private NumberInspector numberInspector;
-    private Fibonacci fibonacci;
+    private ConsoleReaderInterface consoleReaderImpl;
+    private ResponseMakerInterface responseMakerImpl;
+    private WordsInspectorInterface wordsInspectorImpl;
+    private NumberInspectorInterface numberInspectorImpl;
+    private FibonacciInterface fibonacciImpl;
 
     public ApplicationManager() {
         this.bufferReader = new BufferedReader(new InputStreamReader(System.in));
-        this.consoleReader = new ConsoleReader(bufferReader);
-        this.responseMaker = new ResponseMaker();
-        this.wordsInspector = new WordsInspector();
-        this.numberInspector = new NumberInspector();
-        this.fibonacci = new Fibonacci();
+        this.consoleReaderImpl = new ConsoleReaderImpl(bufferReader);
+        this.responseMakerImpl = new ResponseMakerImpl();
+        this.wordsInspectorImpl = new WordsInspectorImpl();
+        this.numberInspectorImpl = new NumberInspectorImpl();
+        this.fibonacciImpl = new FibonacciImpl();
     }
 
     public void run() throws IOException {
 
 
         System.out.println("Bienvenido");
-        String selection = consoleReader.binarySelection("N", "L", selectionLettersOrNumbersMessage);
+        String selection = consoleReaderImpl.binarySelection("N", "L", selectionLettersOrNumbersMessage);
         if (selection.equals("N")) {
             System.out.println("Se calculara la serie fibonnaci para el digito que ingrese:");
-            short digit = consoleReader.readOneDigit();
-            fibonacci.nFibonacciNumber(digit);
+            short digit = consoleReaderImpl.readOneDigit();
+            fibonacciImpl.nFibonacciNumber(digit);
             System.out.println("La serie de fibonnacci de " + digit + " elemento(s) es:");
-            System.out.println(fibonacci.getFibonacciSequence());
+            System.out.println(fibonacciImpl.getFibonacciSequence());
             System.out.println("Ahora se encontrarán los números repetidos y números primos, de una secuencia que ingrese.");
-            long iterations = consoleReader.readPositiveLong();
+            long iterations = consoleReaderImpl.readPositiveLong();
             ArrayList<Double> insertedNumbers = new ArrayList<>();
             TreeSet<Double> allNumbersSet = new TreeSet<>();
             TreeSet<Double> repeatedNumbersSet = new TreeSet<>();
@@ -47,39 +50,39 @@ public class ApplicationManager {
 
             for (long index = 1; index <= iterations; index++) {
 
-                double current = consoleReader.readDouble();
+                double current = consoleReaderImpl.readDouble();
                 if (allNumbersSet.contains(current)) {
                     repeatedNumbersSet.add(current);
                 } else {
                     allNumbersSet.add(current);
                     if (current % 1 == 0) {
                         long currentNumber = (long) current;
-                        if (numberInspector.isPrime(currentNumber)) primeNumbersSet.add(currentNumber);
+                        if (numberInspectorImpl.isPrime(currentNumber)) primeNumbersSet.add(currentNumber);
                     }
                 }
                 insertedNumbers.add(current);
             }
             System.out.println("Se ingresaron " + insertedNumbers.size() + " números");
-            String allNumbersOrdering = consoleReader.binarySelection("A", "D", selectionOrderingMessage);
-            System.out.println(responseMaker.makeStringFromSet(allNumbersSet, allNumbersOrdering));
+            String allNumbersOrdering = consoleReaderImpl.binarySelection("A", "D", selectionOrderingMessage);
+            System.out.println(responseMakerImpl.makeStringFromSet(allNumbersSet, allNumbersOrdering));
 
             System.out.println("De los números ingresados " + repeatedNumbersSet.size() + " estan repetidos");
             if (repeatedNumbersSet.size() > 0) {
-                String repeatedNumbersOrdering = consoleReader.binarySelection("A", "D", selectionOrderingMessage);
-                System.out.println(responseMaker.makeStringFromSet(repeatedNumbersSet, repeatedNumbersOrdering));
+                String repeatedNumbersOrdering = consoleReaderImpl.binarySelection("A", "D", selectionOrderingMessage);
+                System.out.println(responseMakerImpl.makeStringFromSet(repeatedNumbersSet, repeatedNumbersOrdering));
             }
 
             System.out.println("Se identificarón " + primeNumbersSet.size() + " números primos");
             if (primeNumbersSet.size() > 0) {
-                String primeNumbersOrdering = consoleReader.binarySelection("A", "D", selectionOrderingMessage);
-                System.out.println(responseMaker.makeStringFromSet(primeNumbersSet, primeNumbersOrdering));
+                String primeNumbersOrdering = consoleReaderImpl.binarySelection("A", "D", selectionOrderingMessage);
+                System.out.println(responseMakerImpl.makeStringFromSet(primeNumbersSet, primeNumbersOrdering));
             }
 
 
         } else {
             System.out.println("Ingrese una palabra:");
             String word = bufferReader.readLine();
-            System.out.println(responseMaker.makeIsPalindromeMessage(wordsInspector.isPalindrome(word)));
+            System.out.println(responseMakerImpl.makeIsPalindromeMessage(wordsInspectorImpl.isPalindrome(word)));
         }
 
 

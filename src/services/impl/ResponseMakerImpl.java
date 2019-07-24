@@ -1,9 +1,10 @@
-package services;
+package services.impl;
 
 import java.util.TreeSet;
 
-public class ResponseMaker {
+public class ResponseMakerImpl implements services.api.ResponseMakerInterface {
 
+    @Override
     public String makeStringFromSet(TreeSet set, String ordering) {
         String response;
         if (ordering.equals("A")) {
@@ -13,6 +14,7 @@ public class ResponseMaker {
         }
         return response;
     }
+    @Override
     public String makeIsPalindromeMessage(boolean isPalindrome){
         if (isPalindrome){return "La palabra ingresada es palíndroma";}
         else {return "La palabra ingresada no es palíndroma"; }

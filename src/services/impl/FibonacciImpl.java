@@ -1,19 +1,21 @@
-package services;
+package services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fibonacci {
+public class FibonacciImpl implements services.api.FibonacciInterface {
 
     private List<Integer> fibonacciSequence = new ArrayList<>();
 
+    @Override
     public List<Integer> getFibonacciSequence() {
         return fibonacciSequence;
     }
 
-    public Fibonacci() {
+    public FibonacciImpl() {
     }
 
+    @Override
     public int nFibonacciNumber(int digit) {
         return fibonacciNumber(digit + 1, 0, 1);
     }

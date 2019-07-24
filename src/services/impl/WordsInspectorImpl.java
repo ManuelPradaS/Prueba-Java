@@ -1,7 +1,8 @@
-package services;
+package services.impl;
 
-public class WordsInspector {
+public class WordsInspectorImpl implements services.api.WordsInspectorInterface {
 
+    @Override
     public boolean isPalindrome(String word) {
         String lowerCaseWord = word.toLowerCase();
         StringBuilder stringBuilder = new StringBuilder(lowerCaseWord);

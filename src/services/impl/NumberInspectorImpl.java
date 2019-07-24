@@ -1,7 +1,10 @@
-package services;
+package services.impl;
 
-public class NumberInspector {
+import services.api.NumberInspectorInterface;
 
+public class NumberInspectorImpl implements NumberInspectorInterface {
+
+    @Override
     public boolean isPrime(long number) {
         if (number == 2 | number == 3) return true;
         if (number % 2 == 0 || number % 3 == 0) return false;
